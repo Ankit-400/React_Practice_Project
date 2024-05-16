@@ -1,0 +1,84 @@
+dialog::backdrop {
+    background-color: rgba(15, 224, 67, 0.9) !important;
+}
+
+/* Style for the modal dialog */
+dialog {
+    color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2);
+    width: 40%;
+}
+
+.pokemon-data {
+    color: rgb(255, 255, 255);
+    font-weight: 400;
+    letter-spacing: 2px;
+    width: 50%;
+    height: fit-content;
+    min-height: 250px;
+    font-size: 1.3rem;
+}
+
+.modal-upper {
+    margin: 0px auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+
+}
+
+.modal-upper div {
+    display: flex;
+    column-gap: 10%;
+    margin: auto;
+    width: 90%;
+    justify-content: center;
+}
+
+.modal-upper div div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+}
+
+.pokemon-data div label {
+    border-bottom: 1px solid white;
+}
+
+.pokemon-data div label,
+.pokemon-data div p,
+#abilities {
+    font-family: "Josefin Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.modal-image {
+    width: 150px;
+    height: 150px;
+}
+
+#abilities {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#abilities li {
+    background-color: aquamarine;
+    color: black;
+    letter-spacing: 2px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 20px;
+}

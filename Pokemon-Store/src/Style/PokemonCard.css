@@ -1,0 +1,51 @@
+.card-container {
+    padding: 10px;
+    margin: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    transition: all 1s;
+    animation: transit 2s ease-in-out 0s;
+}
+
+.card-container li {
+    margin: 5px auto;
+    width: 100%;
+    list-style: none;
+    cursor: pointer;
+}
+
+.card-container li p {
+    letter-spacing: 3px;
+    line-height: 25px;
+    text-shadow: 2px 2px 2px grey;
+    font-size: 1.3em;
+    border-width: 1;
+}
+
+.card-container li p::after {
+    content: "";
+    display: block;
+    margin: 15px auto;
+    width: 80%;
+    border-bottom: 2px solid rgb(209, 207, 207);
+}
+
+.card-container li img {
+    width: 50%;
+    height: 30%;
+    aspect-ratio: -0.7;
+    max-height: 400px;
+    min-height: 200px;
+}
+
+@keyframes transit {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}

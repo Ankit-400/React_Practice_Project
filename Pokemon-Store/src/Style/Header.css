@@ -1,0 +1,7 @@
+.title {
+    letter-spacing: 4px;
+    color: rgb(0, 119, 255);
+    text-shadow: 2px 1px 1px rgb(230, 33, 220);
+    font-size: 1.7rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
