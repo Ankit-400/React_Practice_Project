@@ -26,6 +26,8 @@ const PokemonCard: React.FC<PropsType> = (props) => {
                             pokemon.name.slice(1)
                         }
                     </p>
+                    <hr style={{ width: '90%', margin: '5px auto' }} />
+                    <button>Add to Cart</button>
                 </li>
             })
         }
