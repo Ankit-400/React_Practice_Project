@@ -26,9 +26,10 @@ const cartSlice = createSlice({
 
             let newFrom = selectedPage - Math.floor(Math.random() * 3);
             newFrom = Math.max(1, newFrom);
+            newFrom = Math.min(newFrom, 26);
 
             let newTo = newFrom + PAGINATION_RANGE - 1;
-            newTo = Math.min(newTo, 30);
+            newTo = Math.min(newTo, 31);
 
             state.activePage = selectedPage;
             state.fromPage = newFrom;

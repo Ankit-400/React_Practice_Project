@@ -24,9 +24,9 @@ const Pagination: React.FC<PropsType> = (props) => {
 
                 <button
                     onClick={() => {
-                        setIsLoading(true);
+                        // setIsLoading(true);
                         dispatch(updatePagination(activePage - 1))
-                        setIsLoading(false);
+                        // setIsLoading(false);
                     }}
                     disabled={activePage == 1}
                 >
@@ -55,7 +55,9 @@ const Pagination: React.FC<PropsType> = (props) => {
                     // setIsLoading(true);
                     dispatch(updatePagination(activePage + 1))
                     // setIsLoading(false);
-                }}>&#x276F;</button>
+                }}
+                    disabled={activePage == 30}
+                >&#x276F;</button>
             </div>
             <div style={{
                 display: "flex", justifyContent: "center", alignItems: "center"
