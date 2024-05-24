@@ -1,17 +1,20 @@
 import React from "react";
 import '../Style/Modal.css'
-import { pokemonDetail } from "../Types/types";
+import { useSelector } from "react-redux";
+import { StoreState } from "../Types/types";
 
 type PropType = {
     open: boolean;
+    pokeId: Number;
     toggle: React.Dispatch<React.SetStateAction<boolean>>;
-    data: pokemonDetail;
 }
 
 const Modal: React.FC<PropType> = (prop) => {
 
-    const { open, toggle, data } = prop;
-    console.log(data);
+    const { open, pokeId, toggle } = prop;
+    const { pokemonList } = useSelector((state: StoreState) => state.cart)
+    const data = pokemonList.find(pokemon => pokemon.id === pokeId)!;
+
 
     return <dialog open={open} className="pokemon-data">
         <section className="modal-upper">

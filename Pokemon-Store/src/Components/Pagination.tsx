@@ -1,110 +1,85 @@
 import React from "react"
-import { PageType } from "../Types/types";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePagination } from "../Store/cartSlice";
+import { StoreState } from "../Types/types";
 
-type propTye = {
-    page: PageType;
-    setPage: React.Dispatch<React.SetStateAction<PageType>>;
-    setOffset: React.Dispatch<React.SetStateAction<number>>;
+type PropsType = {
+    loading: boolean;
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Pagination: React.FC<propTye> = (props) => {
-    const { page, setPage, setOffset } = props;
+const Pagination: React.FC<PropsType> = (props) => {
+    const { activePage, fromPage, toPage } = useSelector((state: StoreState) => state.cart)
+    const dispatch = useDispatch();
 
-    function updatePageDetails(activePage: number, fromPage: number, toPage: number, flag: boolean) {
+    const { loading, setIsLoading } = props;
 
-        if (flag) {
-            activePage -= 1;
-        }
-        else activePage += 1;
-        activePage = activePage == 0 ? 1 : activePage;
-
-        if (activePage === toPage) {
-            fromPage += 1;
-        }
-
-        if (activePage === fromPage) {
-            fromPage -= 1;
-        }
-
-        fromPage = fromPage <= 0 ? 1 : fromPage;
-        toPage = Math.min(fromPage + 4, page.totalPokemons - 20);
-
-        return {
-            activePage: activePage,
-            fromPageNo: fromPage,
-            toPageNo: toPage,
-        }
-    }
-
+    if (loading) return <p>Loading...</p>
 
     return <>
         <div style={{
-            display: 'flex', justifyContent: 'center', gap: '10px'
+            display: 'flex', justifyContent: 'center', gap: '40px'
         }}>
-            <button onClick={() => {
-                setOffset(prev => prev - 20)
-                setPage(prev => {
+            <div style={{ display: 'flex' }}>
 
-                    const updatedPage = updatePageDetails(
-                        prev.activePage,
-                        prev.fromPageNo,
-                        prev.toPageNo,
-                        true
-                    );
-
-                    return {
-                        ...prev,
-                        ...updatedPage
-                    }
-                })
-            }}>&#x276E;
-            </button>
-            <div style={{ display: 'flex' }} key={page.activePage}>
-                <div key={`Inner : ${page.activePage}`} style={{ transform: 'scale(0.9)', border: 'none' }}>
-                    {
-                        Array(page.toPageNo - page.fromPageNo + 1).fill(undefined).map((_, index) => index + page.fromPageNo).map((num) => {
-                            return <button
-                                key={num}
-                                style={{ margin: '2px 5px' }} className={num === page.activePage ? 'active-page' : ''}
-                                onClick={() => {
-                                    setPage(prev => {
-                                        const updatedPage = updatePageDetails(
-                                            num - 1,
-                                            prev.fromPageNo,
-                                            prev.toPageNo,
-                                            false
-                                        );
-
-                                        return {
-                                            ...prev,
-                                            ...updatedPage
-                                        }
-                                    });
-                                }}
-                            >
-                                {num}
-                            </button>
-                        })
-                    }
+                <button
+                    onClick={() => {
+                        setIsLoading(true);
+                        dispatch(updatePagination(activePage - 1))
+                        setIsLoading(false);
+                    }}
+                    disabled={activePage == 1}
+                >
+                    &#x276E;
+                </button>
+                <div style={{ display: 'flex' }} key={activePage}>
+                    <div key={`Inner : ${activePage}`} style={{ transform: 'scale(0.9)', border: 'none' }}>
+                        {
+                            Array(toPage - fromPage + 1).fill(undefined).map((_, index) => index + fromPage).map((num) => {
+                                return <button
+                                    key={num}
+                                    style={{ margin: '2px 5px' }} className={num === activePage ? 'active-page' : ''}
+                                    onClick={() => {
+                                        // setIsLoading(true);
+                                        dispatch(updatePagination(num))
+                                        // setIsLoading(false);
+                                    }}
+                                >
+                                    {num}
+                                </button>
+                            })
+                        }
+                    </div>
                 </div>
+                <button onClick={() => {
+                    // setIsLoading(true);
+                    dispatch(updatePagination(activePage + 1))
+                    // setIsLoading(false);
+                }}>&#x276F;</button>
             </div>
-            <button onClick={() => {
-                setOffset(prev => prev + 20)
-                setPage(prev => {
-
-                    const updatedPage = updatePageDetails(
-                        prev.activePage,
-                        prev.fromPageNo,
-                        prev.toPageNo,
-                        false
-                    );
-
-                    return {
-                        ...prev,
-                        ...updatedPage
+            <div style={{
+                display: "flex", justifyContent: "center", alignItems: "center"
+            }}>
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    const inputElement = (e.target as HTMLFormElement).elements.namedItem('pageNo') as HTMLInputElement;
+                    const inputValue = +(inputElement ? inputElement.value : '');
+                    if (inputValue <= 30 && inputValue >= 1) {
+                        // setIsLoading(true);
+                        dispatch(updatePagination(inputValue));
+                        // setIsLoading(false);
                     }
-                })
-            }}>&#x276F;</button>
+                    e.currentTarget.reset();
+                }}>
+                    <div>
+                        <label htmlFor="pageNo">Go To Page: </label>
+                        <input type="number" name="pageNo" style={{
+                            padding: '5px', borderRadius: '5px', marginLeft: '10px', width: '60px'
+                        }} />
+                    </div>
+                </form >
+                <div>Max: 30</div>
+            </div>
         </div>
     </>
 }
